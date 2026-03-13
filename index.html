@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>XaraBuild — Mobile & Web App Studio | Flutter · MERN · Senior Engineers</title>
+  <meta name="description" content="Senior-led app studio. Flutter, iOS, Android, full-stack web. Fixed pricing from $7,500. MVP in weeks, not months. Prices shown upfront — no sales call required."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #0A0A0F;
+      --ink-2: #2D2D3A;
+      --ink-3: #6E6E85;
+      --surface: #FAFAFA;
+      --surface-2: #F3F3F7;
+      --surface-3: #E8E8F0;
+      --accent: #2563EB;
+      --accent-lt: #EFF6FF;
+      --accent-dk: #1D4ED8;
+      --accent-vivid: #3B82F6;
+      --green: #059669;
+      --green-lt: #ECFDF5;
+      --gold: #D97706;
+      --gold-lt: #FFFBEB;
+      --border: #E2E2EC;
+      --border-2: #CCCCD8;
+      --radius: 14px;
+      --radius-lg: 22px;
+      --radius-xl: 32px;
+      --shadow-sm: 0 1px 3px rgba(10,10,15,.06), 0 2px 8px rgba(10,10,15,.04);
+      --shadow: 0 2px 8px rgba(10,10,15,.08), 0 8px 24px rgba(10,10,15,.06);
+      --shadow-lg: 0 8px 30px rgba(10,10,15,.12), 0 24px 60px rgba(10,10,15,.08);
+      --fd: 'Familjen Grotesk', sans-serif;
+      --fs: 'Instrument Serif', serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--fd); background: var(--surface); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5vw; height: 66px;
+      background: rgba(250,250,250,.88); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: var(--fd); font-weight: 700; font-size: 1.15rem; color: var(--ink); text-decoration: none; letter-spacing: -.02em; display: flex; align-items: center; gap: .3rem; }
+    .nav-logo .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); display: inline-block; animation: breathe 2.5s ease-in-out infinite; }
+    @keyframes breathe { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.7)} }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--ink-3); text-decoration: none; font-size: .875rem; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-cta { background: var(--ink); color: #fff; padding: .5rem 1.2rem; border-radius: 8px; text-decoration: none; font-size: .85rem; font-weight: 600; transition: background .2s, transform .15s; }
+    .nav-cta:hover { background: var(--accent); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 130px 5vw 90px; text-align: center; position: relative; overflow: hidden;
+      background: var(--surface);
+    }
+    .hero-bg {
+      position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+      background:
+        radial-gradient(ellipse 70% 50% at 20% 60%, rgba(37,99,235,.06) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 80% 30%, rgba(37,99,235,.04) 0%, transparent 60%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+      opacity: .35;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--accent-lt); border: 1px solid rgba(37,99,235,.2);
+      color: var(--accent); padding: .4rem 1rem; border-radius: 100px;
+      font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      margin-bottom: 2rem; position: relative; z-index: 1;
+      animation: fadeUp .5s ease both;
+    }
+    .hero-eyebrow .live { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    h1 {
+      font-family: var(--fd); font-size: clamp(2.6rem, 6vw, 4.8rem);
+      font-weight: 700; line-height: 1.06; letter-spacing: -.035em;
+      color: var(--ink); max-width: 820px;
+      position: relative; z-index: 1;
+      animation: fadeUp .5s .1s ease both;
+    }
+    h1 .serif { font-family: var(--fs); font-weight: 400; font-style: italic; color: var(--accent); }
+    h1 .serif-plain { font-family: var(--fs); font-weight: 400; font-style: italic; }
+
+    .hero-sub {
+      font-size: clamp(.95rem, 1.6vw, 1.1rem); color: var(--ink-3);
+      max-width: 560px; margin: 1.75rem auto 0; font-weight: 400; line-height: 1.75;
+      position: relative; z-index: 1;
+      animation: fadeUp .5s .2s ease both;
+    }
+
+    /* ── COMPARISON STRIP ── */
+    .compare-strip {
+      display: flex; align-items: center; gap: 0;
+      margin: 2.5rem auto 0; max-width: 640px; width: 100%;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      overflow: hidden; background: #fff;
+      position: relative; z-index: 1;
+      animation: fadeUp .5s .3s ease both;
+      box-shadow: var(--shadow-sm);
+    }
+    .cs-col { flex: 1; padding: 1.1rem 1.25rem; }
+    .cs-col.bad { background: #FFF8F8; }
+    .cs-col.good { background: #F0FDF4; }
+    .cs-div { width: 1px; background: var(--border); align-self: stretch; }
+    .cs-label { font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .55rem; }
+    .cs-col.bad .cs-label { color: #DC2626; }
+    .cs-col.good .cs-label { color: var(--green); }
+    .cs-item { display: flex; align-items: center; gap: .45rem; font-size: .8rem; color: var(--ink-2); margin-bottom: .3rem; line-height: 1.4; }
+    .cs-item:last-child { margin-bottom: 0; }
+    .cs-item .x { color: #EF4444; font-size: .75rem; flex-shrink: 0; }
+    .cs-item .ck { color: var(--green); font-size: .75rem; flex-shrink: 0; }
+
+    .hero-cta {
+      display: flex; gap: .75rem; flex-wrap: wrap; justify-content: center;
+      margin-top: 2.25rem; position: relative; z-index: 1;
+      animation: fadeUp .5s .4s ease both;
+    }
+    .btn-primary {
+      background: var(--ink); color: #fff; padding: .85rem 2rem; border-radius: 10px;
+      font-size: .95rem; font-weight: 600; text-decoration: none;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 4px 16px rgba(10,10,15,.2);
+      display: flex; align-items: center; gap: .4rem;
+    }
+    .btn-primary:hover { background: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,99,235,.35); }
+    .btn-ghost {
+      background: transparent; color: var(--ink-2); padding: .85rem 1.75rem;
+      border-radius: 10px; font-size: .95rem; font-weight: 500; text-decoration: none;
+      border: 1.5px solid var(--border); transition: border-color .2s, color .2s, transform .15s;
+    }
+    .btn-ghost:hover { border-color: var(--ink); color: var(--ink); transform: translateY(-2px); }
+
+    .hero-trust {
+      display: flex; gap: 2.5rem; margin-top: 3.5rem; flex-wrap: wrap; justify-content: center;
+      position: relative; z-index: 1;
+      animation: fadeUp .5s .5s ease both;
+    }
+    .trust-item { display: flex; align-items: center; gap: .5rem; font-size: .8rem; color: var(--ink-3); }
+    .trust-item strong { color: var(--ink-2); font-weight: 600; }
+    .trust-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--border-2); }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 5vw; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .eyebrow { font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: .75rem; }
+    .section-title { font-family: var(--fd); font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 700; letter-spacing: -.025em; line-height: 1.12; color: var(--ink); max-width: 580px; }
+    .section-title .serif { font-family: var(--fs); font-style: italic; font-weight: 400; }
+    .section-sub { color: var(--ink-3); font-size: .95rem; max-width: 500px; margin-top: .75rem; line-height: 1.75; }
+
+    /* ── WHY XARALABS ── */
+    .why { background: var(--ink); }
+    .why .eyebrow { color: #818CF8; }
+    .why .section-title { color: #fff; max-width: 700px; }
+    .why .section-sub { color: rgba(255,255,255,.45); max-width: 560px; }
+    .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; margin-top: 4rem; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.06); border-radius: var(--radius-lg); overflow: hidden; }
+    .why-card { padding: 2rem 2rem 2.25rem; background: var(--ink); transition: background .25s; }
+    .why-card:hover { background: #0F0F1A; }
+    .wc-icon { font-size: 1.6rem; margin-bottom: 1rem; }
+    .wc-tag { display: inline-block; background: rgba(129,140,248,.12); color: #818CF8; font-size: .65rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: .2rem .65rem; border-radius: 100px; margin-bottom: .75rem; }
+    .why-card h3 { font-family: var(--fd); font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: .5rem; letter-spacing: -.01em; }
+    .why-card p { font-size: .85rem; color: rgba(255,255,255,.42); line-height: 1.7; }
+    .why-card .wc-proof { margin-top: .9rem; padding-top: .9rem; border-top: 1px solid rgba(255,255,255,.06); font-size: .78rem; color: rgba(129,140,248,.8); font-weight: 600; }
+
+    /* ── STACK ── */
+    .stack { background: var(--surface-2); }
+    .stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 3.5rem; }
+    .stack-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.6rem; transition: box-shadow .2s, transform .2s, border-color .2s; }
+    .stack-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); border-color: var(--border-2); }
+    .sc-icon { font-size: 2rem; margin-bottom: .75rem; }
+    .sc-type { font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: .3rem; }
+    .stack-card h3 { font-size: .95rem; font-weight: 700; color: var(--ink); margin-bottom: .3rem; }
+    .stack-card p { font-size: .8rem; color: var(--ink-3); line-height: 1.6; }
+    .sc-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .75rem; }
+    .sc-tag { background: var(--surface-2); color: var(--ink-2); font-size: .68rem; font-weight: 600; padding: .18rem .55rem; border-radius: 6px; border: 1px solid var(--border); }
+
+    /* ── PROCESS ── */
+    .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0; margin-top: 3.5rem; position: relative; }
+    .process-steps::before { content: ''; position: absolute; top: 28px; left: 5%; right: 5%; height: 1px; background: linear-gradient(to right, transparent, var(--border) 10%, var(--border) 90%, transparent); z-index: 0; }
+    .ps { padding: 0 1rem 1.5rem; position: relative; z-index: 1; }
+    .ps-num { width: 56px; height: 56px; border-radius: 50%; background: #fff; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: var(--fd); font-size: .85rem; font-weight: 700; color: var(--accent); margin: 0 auto 1rem; box-shadow: var(--shadow-sm); }
+    .ps-icon { font-size: 1.2rem; }
+    .ps h4 { font-size: .9rem; font-weight: 700; text-align: center; margin-bottom: .35rem; }
+    .ps p { font-size: .78rem; color: var(--ink-3); line-height: 1.6; text-align: center; }
+
+    /* ── PRICING ── */
+    .pricing { background: var(--ink); }
+    .pricing .eyebrow { color: #34D399; }
+    .pricing .section-title { color: #fff; max-width: 640px; }
+    .pricing .section-sub { color: rgba(255,255,255,.4); }
+    .pricing-note { display: inline-flex; align-items: center; gap: .4rem; background: rgba(52,211,153,.1); border: 1px solid rgba(52,211,153,.2); color: #34D399; padding: .4rem 1rem; border-radius: 100px; font-size: .75rem; font-weight: 700; margin-top: 1rem; }
+    .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem; margin-top: 3.5rem; }
+    .plan { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius-lg); padding: 2rem; transition: background .2s, border-color .2s, transform .2s; position: relative; }
+    .plan:hover { background: rgba(37,99,235,.08); border-color: rgba(37,99,235,.3); transform: translateY(-3px); }
+    .plan.featured { border-color: rgba(37,99,235,.5); background: rgba(37,99,235,.08); }
+    .plan-badge { position: absolute; top: -1px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #fff; font-size: .65rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: .25rem .85rem; border-radius: 0 0 8px 8px; }
+    .plan-type { font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.35); margin-bottom: .75rem; }
+    .plan h3 { font-family: var(--fd); font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: .5rem; }
+    .plan p { font-size: .82rem; color: rgba(255,255,255,.4); line-height: 1.65; margin-bottom: 1.25rem; }
+    .plan-price { font-family: var(--fd); font-size: 1.65rem; font-weight: 700; color: #fff; }
+    .plan-price span { font-size: .8rem; font-weight: 400; color: rgba(255,255,255,.3); }
+    .plan-timeline { font-size: .75rem; color: #34D399; font-weight: 600; margin-top: .3rem; margin-bottom: 1.25rem; }
+    .plan-features { list-style: none; display: flex; flex-direction: column; gap: .45rem; }
+    .plan-features li { font-size: .81rem; color: rgba(255,255,255,.5); display: flex; align-items: flex-start; gap: .5rem; line-height: 1.45; }
+    .plan-features li::before { content: '✓'; color: #34D399; font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+
+    /* ── ADDONS ── */
+    .addons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 3rem; }
+    .addon { border: 1.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; display: flex; align-items: flex-start; gap: 1.1rem; background: #fff; transition: border-color .2s, box-shadow .2s, transform .2s; }
+    .addon:hover { border-color: var(--accent); box-shadow: var(--shadow); transform: translateY(-2px); }
+    .addon-icon { width: 46px; height: 46px; border-radius: 12px; background: var(--gold-lt); color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+    .addon-body h3 { font-size: .95rem; font-weight: 700; margin-bottom: .25rem; }
+    .addon-body p { font-size: .82rem; color: var(--ink-3); line-height: 1.6; }
+    .addon-price { font-family: var(--fd); font-size: 1.1rem; font-weight: 700; color: var(--accent); margin-top: .4rem; }
+
+    /* ── FORM ── */
+    .form-section { background: var(--surface-2); }
+    .form-wrap { display: grid; grid-template-columns: 1fr 1.45fr; gap: 5rem; align-items: start; }
+    .form-info { position: sticky; top: 90px; }
+    .form-info .section-title { max-width: 100%; }
+    .form-info .section-sub { max-width: 100%; }
+    .form-perks { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem; }
+    .perk { display: flex; align-items: flex-start; gap: 1rem; }
+    .perk-icon { width: 38px; height: 38px; border-radius: 9px; background: #fff; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .perk-text h4 { font-size: .88rem; font-weight: 700; margin-bottom: .1rem; }
+    .perk-text p { font-size: .8rem; color: var(--ink-3); }
+
+    .job-form { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2.5rem; box-shadow: var(--shadow); }
+    .form-title { font-family: var(--fd); font-size: 1.15rem; font-weight: 700; margin-bottom: .25rem; }
+    .form-subtitle { font-size: .82rem; color: var(--ink-3); margin-bottom: 2rem; }
+    .fg { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
+    .field { display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1rem; }
+    .field label, .fls { font-size: .72rem; font-weight: 700; color: var(--ink-2); letter-spacing: .04em; text-transform: uppercase; }
+    .fls { display: block; margin-bottom: .45rem; }
+    .field input, .field select, .field textarea { padding: .68rem 1rem; border: 1.5px solid var(--border); border-radius: 8px; font-family: var(--fd); font-size: .875rem; color: var(--ink); background: var(--surface-2); transition: border-color .2s, box-shadow .2s, background .2s; outline: none; }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--accent); background: #fff; box-shadow: 0 0 0 3px rgba(37,99,235,.1); }
+    .field textarea { resize: vertical; min-height: 100px; }
+
+    .cg3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; margin-bottom: 1rem; }
+    .cg2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: .5rem; margin-bottom: 1rem; }
+    .cr, .cc { display: none; }
+    .cl { display: flex; flex-direction: column; align-items: center; gap: .3rem; padding: .75rem .4rem; border: 1.5px solid var(--border); border-radius: 9px; cursor: pointer; font-size: .74rem; font-weight: 600; color: var(--ink-3); text-align: center; transition: all .2s; background: var(--surface-2); line-height: 1.3; }
+    .cl .ico { font-size: 1.2rem; }
+    .cr:checked + .cl, .cc:checked + .cl { border-color: var(--accent); background: var(--accent-lt); color: var(--accent); }
+    .cl:hover { border-color: var(--accent); }
+    .fl { display: flex; align-items: center; justify-content: center; padding: .55rem .8rem; border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; font-size: .78rem; font-weight: 500; color: var(--ink-3); text-align: center; transition: all .2s; background: var(--surface-2); }
+    .cr:checked + .fl, .cc:checked + .fl { border-color: var(--accent); background: var(--accent-lt); color: var(--accent); }
+    .fl:hover { border-color: var(--accent); }
+
+    .bw { display: flex; flex-direction: column; gap: .5rem; margin-bottom: 1rem; }
+    .bs { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 2px; background: linear-gradient(to right, var(--accent) 30%, var(--border) 30%); outline: none; cursor: pointer; }
+    .bs::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--accent); box-shadow: 0 2px 6px rgba(37,99,235,.4); cursor: pointer; }
+    .bd { display: flex; justify-content: space-between; font-size: .74rem; color: var(--ink-3); }
+    .bv { font-family: var(--fd); font-size: .9rem; font-weight: 700; color: var(--accent); }
+
+    .at { display: flex; align-items: flex-start; gap: 1rem; padding: .9rem 1.1rem; border: 1.5px solid var(--border); border-radius: 10px; cursor: pointer; transition: border-color .2s, background .2s; background: var(--surface-2); margin-bottom: .65rem; }
+    .at:has(input:checked) { border-color: var(--accent); background: var(--accent-lt); }
+    .at input[type="checkbox"] { margin-top: .15rem; accent-color: var(--accent); width: 15px; height: 15px; flex-shrink: 0; cursor: pointer; }
+    .at-body h4 { font-size: .85rem; font-weight: 700; margin-bottom: .1rem; }
+    .at-body p { font-size: .76rem; color: var(--ink-3); line-height: 1.5; }
+    .at-fee { font-family: var(--fd); font-size: .88rem; font-weight: 700; color: var(--accent); margin-top: .2rem; }
+
+    .fd-zone { border: 2px dashed var(--border); border-radius: 10px; padding: 1.35rem; text-align: center; cursor: pointer; transition: border-color .2s, background .2s; background: var(--surface-2); margin-bottom: 1rem; }
+    .fd-zone:hover, .fd-zone.dv { border-color: var(--accent); background: var(--accent-lt); }
+    .fd-zone input { display: none; }
+    .fd-zone p { font-size: .8rem; color: var(--ink-3); }
+    .fd-zone strong { color: var(--accent); }
+    .fn { font-size: .78rem; color: var(--green); font-weight: 600; margin-top: .35rem; }
+
+    .divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
+    .sstep { font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: .5rem; display: block; }
+
+    .submit-btn { width: 100%; padding: .95rem; background: var(--ink); color: #fff; border: none; border-radius: 10px; font-family: var(--fd); font-size: 1rem; font-weight: 700; cursor: pointer; transition: background .2s, transform .15s, box-shadow .2s; display: flex; align-items: center; justify-content: center; gap: .5rem; }
+    .submit-btn:hover { background: var(--accent); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(37,99,235,.3); }
+    .submit-btn.loading { opacity: .7; pointer-events: none; }
+    .form-note { font-size: .72rem; color: var(--ink-3); text-align: center; margin-top: .65rem; }
+
+    .sp-panel { display: none; flex-direction: column; align-items: center; text-align: center; padding: 3rem 2rem; }
+    .sicon { width: 68px; height: 68px; border-radius: 50%; background: var(--green-lt); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 1.4rem; animation: popIn .4s cubic-bezier(.34,1.56,.64,1) both; }
+    @keyframes popIn { from{transform:scale(0)} to{transform:scale(1)} }
+    .sp-panel h3 { font-family: var(--fd); font-size: 1.4rem; font-weight: 700; margin-bottom: .5rem; }
+    .sp-panel > p { color: var(--ink-3); font-size: .88rem; max-width: 340px; }
+    .ns-list { margin-top: 1.4rem; display: flex; flex-direction: column; gap: .5rem; width: 100%; max-width: 380px; text-align: left; }
+    .ns { display: flex; align-items: flex-start; gap: .7rem; background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: .7rem 1rem; font-size: .8rem; animation: sli .4s ease both; }
+    .ns:nth-child(1){animation-delay:.1s} .ns:nth-child(2){animation-delay:.25s} .ns:nth-child(3){animation-delay:.4s} .ns:nth-child(4){animation-delay:.55s}
+    @keyframes sli { from{opacity:0;transform:translateX(-10px)} to{opacity:1;transform:translateX(0)} }
+    .nn { width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: .68rem; font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--ink); color: rgba(255,255,255,.4); padding: 3rem 5vw; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .fl-logo { font-family: var(--fd); font-weight: 700; font-size: 1.1rem; color: #fff; display: flex; align-items: center; gap: .4rem; }
+    .fl-logo .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: inline-block; }
+    footer p { font-size: .78rem; }
+    .fl-links { display: flex; gap: 1.5rem; }
+    .fl-links a { color: rgba(255,255,255,.35); text-decoration: none; font-size: .78rem; transition: color .2s; }
+    .fl-links a:hover { color: #fff; }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media(max-width:900px) {
+      .form-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+      .form-info { position: static; }
+      .nav-links { display: none; }
+      .addons-grid { grid-template-columns: 1fr; }
+      .compare-strip { flex-direction: column; }
+      .cs-div { width: 100%; height: 1px; }
+      .process-steps::before { display: none; }
+    }
+    @media(max-width:600px) {
+      .fg { grid-template-columns: 1fr; }
+      .hero-trust { gap: 1rem; }
+      .why-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">XaraBuild <span class="dot"></span></a>
+  <ul class="nav-links">
+    <li><a href="#why">Why XaraBuild</a></li>
+    <li><a href="#stack">Tech Stack</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+  <a href="#request" class="nav-cta">Start a Project →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-eyebrow"><span class="live"></span> Now taking projects · Flutter · MERN · Native</div>
+
+  <h1>Ship your <span class="serif">mobile app</span><br>in weeks, <span class="serif-plain">not months</span></h1>
+
+  <p class="hero-sub">Senior engineers. Fixed pricing. No sales call required to see our rates. Flutter, iOS, Android, and full-stack web — built, tested, and deployed by a senior team.</p>
+
+  <!-- Comparison strip vs "typical agencies" (read: Benmore) -->
+  <div class="compare-strip">
+    <div class="cs-col bad">
+      <div class="cs-label">❌ Typical Agencies</div>
+      <div class="cs-item"><span class="x">✕</span> Hidden pricing — book a call to find out</div>
+      <div class="cs-item"><span class="x">✕</span> Django-first stack, limited mobile depth</div>
+      <div class="cs-item"><span class="x">✕</span> Juniors doing the actual build</div>
+      <div class="cs-item"><span class="x">✕</span> 3–6 month timelines with handoff delays</div>
+    </div>
+    <div class="cs-div"></div>
+    <div class="cs-col good">
+      <div class="cs-label">✅ XaraBuild</div>
+      <div class="cs-item"><span class="ck">✓</span> Prices shown right here — from $7,500</div>
+      <div class="cs-item"><span class="ck">✓</span> Flutter-native + MERN specialists</div>
+      <div class="cs-item"><span class="ck">✓</span> Senior engineers only, no juniors ever</div>
+      <div class="cs-item"><span class="ck">✓</span> MVP in 2–7 weeks, WhatsApp access</div>
+    </div>
+  </div>
+
+  <div class="hero-cta">
+    <a href="#request" class="btn-primary">Start Your Project →</a>
+    <a href="#pricing" class="btn-ghost">See Pricing</a>
+  </div>
+
+  <div class="hero-trust">
+    <div class="trust-item"><strong>100%</strong> Senior engineers</div>
+    <div class="trust-dot"></div>
+    <div class="trust-item"><strong>2–7 wk</strong> MVP delivery</div>
+    <div class="trust-dot"></div>
+    <div class="trust-item"><strong>Flutter</strong> + <strong>MERN</strong> native</div>
+    <div class="trust-dot"></div>
+    <div class="trust-item"><strong>WhatsApp</strong> direct access</div>
+  </div>
+</section>
+
+<!-- WHY XARALABS -->
+<section class="why" id="why">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="eyebrow">Why XaraBuild</p>
+      <h2 class="section-title">Built different. <span class="serif">On purpose.</span></h2>
+      <p class="section-sub">Every decision we made — stack, pricing model, team structure — was made to fix what's broken about most dev agencies.</p>
+    </div>
+    <div class="why-grid reveal" style="margin-top:3.5rem">
+      <div class="why-card">
+        <div class="wc-icon">💰</div>
+        <div class="wc-tag">Pricing</div>
+        <h3>Prices shown. No call required.</h3>
+        <p>Most agencies hide pricing to force a discovery call. We think that wastes your time. Every package is priced on this page — right now.</p>
+        <div class="wc-proof">→ Flutter MVP from $7,500. See full pricing below.</div>
+      </div>
+      <div class="why-card">
+        <div class="wc-icon">📱</div>
+        <div class="wc-tag">Stack</div>
+        <h3>Flutter-native + MERN specialists</h3>
+        <p>Most "mobile" agencies default to Django backends and web-wrapped apps. We're Flutter and MERN-native — it's all we do, and we're faster because of it.</p>
+        <div class="wc-proof">→ One Flutter codebase, iOS + Android, production-grade.</div>
+      </div>
+      <div class="why-card">
+        <div class="wc-icon">🧠</div>
+        <div class="wc-tag">Team</div>
+        <h3>Senior only. No juniors. Ever.</h3>
+        <p>We don't run a training operation. Every architect, engineer, and PM working on your project is senior-level. Your code is written by people who've shipped before.</p>
+        <div class="wc-proof">→ No "the senior reviewed it" — the senior wrote it.</div>
+      </div>
+      <div class="why-card">
+        <div class="wc-icon">⚡</div>
+        <div class="wc-tag">Speed</div>
+        <h3>2–7 weeks to MVP. Not 6 months.</h3>
+        <p>Long agency processes exist to justify headcount. We run lean, sprint-based delivery with milestone sign-offs — so you ship fast and stay in control.</p>
+        <div class="wc-proof">→ Flutter MVP in 3–4 weeks. Full bundle in 5–7 weeks.</div>
+      </div>
+      <div class="why-card">
+        <div class="wc-icon">💬</div>
+        <div class="wc-tag">Access</div>
+        <h3>WhatsApp-first. No PM middleman.</h3>
+        <p>You talk directly to the engineers building your product. No account managers filtering your messages. WhatsApp, Slack, or whatever works for you.</p>
+        <div class="wc-proof">→ Direct engineer access from day one.</div>
+      </div>
+      <div class="why-card">
+        <div class="wc-icon">📦</div>
+        <div class="wc-tag">Ownership</div>
+        <h3>Your IP. Full repo handover. Always.</h3>
+        <p>You own 100% of the code, assets, and documentation from the moment we start. NDA available before any detailed discussion. No lock-in, ever.</p>
+        <div class="wc-proof">→ Full GitHub repo transfer on delivery.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section class="stack" id="stack">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="eyebrow">Tech Stack</p>
+      <h2 class="section-title">Mobile-first. <span class="serif">Modern stack.</span></h2>
+      <p class="section-sub">We picked our stack deliberately — not because it's trendy, but because Flutter and MERN are the fastest path to a production-ready mobile or web product.</p>
+    </div>
+    <div class="stack-grid reveal">
+      <div class="stack-card">
+        <div class="sc-icon">📱</div>
+        <div class="sc-type">Cross-Platform Mobile</div>
+        <h3>Flutter</h3>
+        <p>One codebase. iOS and Android. Native performance, pixel-perfect UI, and faster delivery than maintaining two separate apps.</p>
+        <div class="sc-tags"><span class="sc-tag">Dart</span><span class="sc-tag">iOS</span><span class="sc-tag">Android</span><span class="sc-tag">Flutter 3+</span></div>
+      </div>
+      <div class="stack-card">
+        <div class="sc-icon"></div>
+        <div class="sc-type">Native iOS</div>
+        <h3>Swift / SwiftUI</h3>
+        <p>Platform-first iOS builds with full hardware API access, native UX patterns, and App Store submission included.</p>
+        <div class="sc-tags"><span class="sc-tag">Swift</span><span class="sc-tag">SwiftUI</span><span class="sc-tag">Xcode</span><span class="sc-tag">TestFlight</span></div>
+      </div>
+      <div class="stack-card">
+        <div class="sc-icon">🤖</div>
+        <div class="sc-type">Native Android</div>
+        <h3>Kotlin / Jetpack</h3>
+        <p>Modern Kotlin Android builds with Jetpack Compose and full Google Play Store submission and setup included.</p>
+        <div class="sc-tags"><span class="sc-tag">Kotlin</span><span class="sc-tag">Jetpack</span><span class="sc-tag">Play Store</span></div>
+      </div>
+      <div class="stack-card">
+        <div class="sc-icon">⚛️</div>
+        <div class="sc-type">Frontend Web</div>
+        <h3>React / Next.js</h3>
+        <p>Fast, SEO-ready web frontends. React or Next.js — we recommend the right one for your use case, or follow your preference.</p>
+        <div class="sc-tags"><span class="sc-tag">React</span><span class="sc-tag">Next.js</span><span class="sc-tag">Vue</span><span class="sc-tag">TypeScript</span></div>
+      </div>
+      <div class="stack-card">
+        <div class="sc-icon">🟢</div>
+        <div class="sc-type">Backend</div>
+        <h3>Node.js / Express</h3>
+        <p>Our default MERN backend — fast, scalable, and the right fit for real-time features, APIs, and mobile integrations. Python available too.</p>
+        <div class="sc-tags"><span class="sc-tag">Node.js</span><span class="sc-tag">Express</span><span class="sc-tag">FastAPI</span><span class="sc-tag">REST</span></div>
+      </div>
+      <div class="stack-card">
+        <div class="sc-icon">☁️</div>
+        <div class="sc-type">Infrastructure</div>
+        <h3>DigitalOcean / AWS</h3>
+        <p>Production hosting, CI/CD, and deployment configured and handed over. Your infra is set up correctly from the start.</p>
+        <div class="sc-tags"><span class="sc-tag">DigitalOcean</span><span class="sc-tag">MongoDB</span><span class="sc-tag">GitHub</span><span class="sc-tag">CI/CD</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="eyebrow">How It Works</p>
+      <h2 class="section-title">Brief to live product. <span class="serif">No surprises.</span></h2>
+      <p class="section-sub">A clear, milestone-driven process. Nothing moves forward without your sign-off. You always know exactly where your project stands.</p>
+    </div>
+    <div class="process-steps reveal">
+      <div class="ps">
+        <div class="ps-num"><span class="ps-icon">📋</span></div>
+        <h4>Submit Brief</h4>
+        <p>Fill out the form below — 4 minutes. We review every brief personally within 24 hours.</p>
+      </div>
+      <div class="ps">
+        <div class="ps-num"><span class="ps-icon">📄</span></div>
+        <h4>PRD & NDA</h4>
+        <p>No PRD? We generate one. NDA executed before any detailed discussion of your idea.</p>
+      </div>
+      <div class="ps">
+        <div class="ps-num"><span class="ps-icon">✍️</span></div>
+        <h4>Sign-Off</h4>
+        <p>We refine the PRD together. Zero code written until you confirm every line of scope.</p>
+      </div>
+      <div class="ps">
+        <div class="ps-num"><span class="ps-icon">🛠️</span></div>
+        <h4>Sprint Build</h4>
+        <p>Senior engineers build in weekly sprints. Daily updates via WhatsApp or Slack.</p>
+      </div>
+      <div class="ps">
+        <div class="ps-num"><span class="ps-icon">🧪</span></div>
+        <h4>QA & Review</h4>
+        <p>Thorough testing, your structured review session, and revisions handled before launch.</p>
+      </div>
+      <div class="ps">
+        <div class="ps-num"><span class="ps-icon">🚀</span></div>
+        <h4>Deploy & Hand Over</h4>
+        <p>Live, hosted, and configured. Full repo access + documentation. Yours completely.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="eyebrow">Pricing</p>
+      <h2 class="section-title">Fixed-rate packages. <span class="serif">No surprises.</span></h2>
+      <p class="section-sub">No hourly billing. No "let's get on a call to discuss budget." Fixed scope, fixed price, senior team on every single project.</p>
+      <div class="pricing-note">✓ All prices shown upfront — no sales call required</div>
+    </div>
+    <div class="plans-grid reveal">
+      <div class="plan">
+        <div class="plan-type">Cross-Platform Mobile</div>
+        <h3>Flutter MVP</h3>
+        <p>One codebase, both stores. iOS and Android from a single Flutter build with clean UI and production backend.</p>
+        <div class="plan-price">From $7,500 <span>/ project</span></div>
+        <div class="plan-timeline">⚡ Delivered in 3–4 weeks</div>
+        <ul class="plan-features">
+          <li>iOS + Android from one codebase</li>
+          <li>Up to 8 screens</li>
+          <li>Auth + API integration</li>
+          <li>App Store submission ready</li>
+          <li>Full repo handover</li>
+        </ul>
+      </div>
+      <div class="plan">
+        <div class="plan-type">Native Mobile</div>
+        <h3>Native iOS or Android</h3>
+        <p>Platform-specific builds for native performance, deep OS integrations, and a platform-first experience.</p>
+        <div class="plan-price">From $8,000 <span>/ project</span></div>
+        <div class="plan-timeline">⚡ Delivered in 3–5 weeks</div>
+        <ul class="plan-features">
+          <li>Swift (iOS) or Kotlin (Android)</li>
+          <li>Native UI components</li>
+          <li>Full hardware API access</li>
+          <li>Store submission included</li>
+          <li>Full repo handover</li>
+        </ul>
+      </div>
+      <div class="plan featured">
+        <div class="plan-badge">Most Popular</div>
+        <div class="plan-type">Full Stack Web</div>
+        <h3>MERN Web Platform</h3>
+        <p>A complete web platform — React frontend, Node backend, database, auth, and dashboard. Hosted, live, yours to own.</p>
+        <div class="plan-price">From $8,500 <span>/ project</span></div>
+        <div class="plan-timeline">⚡ Delivered in 3–5 weeks</div>
+        <ul class="plan-features">
+          <li>React / Next.js frontend</li>
+          <li>Node.js / Express backend</li>
+          <li>MongoDB + auth included</li>
+          <li>Admin dashboard</li>
+          <li>Hosted & deployed</li>
+        </ul>
+      </div>
+      <div class="plan">
+        <div class="plan-type">Full Product</div>
+        <h3>Mobile + Web Bundle</h3>
+        <p>The complete product — mobile app and web platform, unified API, managed by one senior team end to end.</p>
+        <div class="plan-price">From $12,000 <span>/ project</span></div>
+        <div class="plan-timeline">⚡ Delivered in 5–7 weeks</div>
+        <ul class="plan-features">
+          <li>Flutter or Native mobile</li>
+          <li>Full stack web platform</li>
+          <li>Unified API layer</li>
+          <li>Full repo handover</li>
+          <li>One team, one handover</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADD-ONS -->
+<section id="addons">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="eyebrow">Add-On Services</p>
+      <h2 class="section-title">Everything to <span class="serif">start right.</span></h2>
+      <p class="section-sub">Optional services before your build — so your project is scoped correctly and your IP is protected from day one.</p>
+    </div>
+    <div class="addons-grid reveal">
+      <div class="addon">
+        <div class="addon-icon">📝</div>
+        <div class="addon-body">
+          <h3>PRD Generation</h3>
+          <p>No Product Requirements Document? Share your idea — we produce a complete, structured PRD, reviewed and approved by you before any build begins.</p>
+          <div class="addon-price">$199</div>
+        </div>
+      </div>
+      <div class="addon">
+        <div class="addon-icon">🔐</div>
+        <div class="addon-body">
+          <h3>NDA Preparation</h3>
+          <p>We prepare a mutual Non-Disclosure Agreement before any detailed discussion of your product. Your IP is protected from the very first conversation.</p>
+          <div class="addon-price">$149</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-section" id="request">
+  <div class="section-inner">
+    <div class="form-wrap">
+      <div class="form-info reveal">
+        <p class="eyebrow">Start a Project</p>
+        <h2 class="section-title">Tell us what you're <span class="serif">building.</span></h2>
+        <p class="section-sub">Fill in your brief. A senior team member reviews it personally and responds within 24 hours with a clear proposal.</p>
+        <div class="form-perks">
+          <div class="perk"><div class="perk-icon">📅</div><div class="perk-text"><h4>Response within 24 hours</h4><p>Reviewed by a senior team member — not an SDR</p></div></div>
+          <div class="perk"><div class="perk-icon">💬</div><div class="perk-text"><h4>WhatsApp or Slack — you choose</h4><p>Direct access to your engineers from day one</p></div></div>
+          <div class="perk"><div class="perk-icon">📄</div><div class="perk-text"><h4>PRD sign-off before build</h4><p>Not a single line of code written without your approval</p></div></div>
+          <div class="perk"><div class="perk-icon">🔒</div><div class="perk-text"><h4>NDA on request</h4><p>Signed before any detailed disclosure of your idea</p></div></div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="job-form" id="jobForm">
+          <div id="formContent">
+            <h3 class="form-title">Project Brief</h3>
+            <p class="form-subtitle">Takes about 4 minutes. Every field helps us scope accurately.</p>
+
+            <!-- Step 1 -->
+            <span class="sstep">Step 1 — Contact Details</span>
+            <div class="fg">
+              <div class="field"><label for="fn">First Name *</label><input type="text" id="fn" placeholder="Alex" required/></div>
+              <div class="field"><label for="ln">Last Name *</label><input type="text" id="ln" placeholder="Johnson" required/></div>
+            </div>
+            <div class="fg">
+              <div class="field"><label for="em">Email Address *</label><input type="email" id="em" placeholder="alex@startup.com" required/></div>
+              <div class="field"><label for="co">Company / Startup</label><input type="text" id="co" placeholder="Acme Inc."/></div>
+            </div>
+            <div class="field"><label for="wa">WhatsApp (optional — preferred)</label><input type="tel" id="wa" placeholder="+1 555 000 0000"/></div>
+
+            <div class="divider"></div>
+
+            <!-- Step 2 -->
+            <span class="sstep">Step 2 — Project Type</span>
+            <label class="fls">What are you building? *</label>
+            <div class="cg3">
+              <div><input type="radio" name="pt" id="ptFl" value="Flutter (iOS + Android)" class="cr" required/><label for="ptFl" class="cl"><span class="ico">📱</span>Flutter<br>iOS + Android</label></div>
+              <div><input type="radio" name="pt" id="ptIOS" value="Native iOS" class="cr"/><label for="ptIOS" class="cl"><span class="ico"></span>Native<br>iOS</label></div>
+              <div><input type="radio" name="pt" id="ptAnd" value="Native Android" class="cr"/><label for="ptAnd" class="cl"><span class="ico">🤖</span>Native<br>Android</label></div>
+              <div><input type="radio" name="pt" id="ptWeb" value="Full Stack Web" class="cr"/><label for="ptWeb" class="cl"><span class="ico">🌐</span>Full Stack<br>Web</label></div>
+              <div><input type="radio" name="pt" id="ptBun" value="Mobile + Web Bundle" class="cr"/><label for="ptBun" class="cl"><span class="ico">⚡</span>Mobile +<br>Web</label></div>
+              <div><input type="radio" name="pt" id="ptNs" value="Not sure yet" class="cr"/><label for="ptNs" class="cl"><span class="ico">🤔</span>Not sure<br>yet</label></div>
+            </div>
+
+            <div id="wsSection" style="display:none">
+              <label class="fls">Frontend Preference</label>
+              <div class="cg2" style="grid-template-columns:repeat(4,1fr)">
+                <div><input type="radio" name="fe" id="feR" value="React" class="cr"/><label for="feR" class="fl">React</label></div>
+                <div><input type="radio" name="fe" id="feN" value="Next.js" class="cr"/><label for="feN" class="fl">Next.js</label></div>
+                <div><input type="radio" name="fe" id="feV" value="Vue" class="cr"/><label for="feV" class="fl">Vue</label></div>
+                <div><input type="radio" name="fe" id="feO" value="Recommend me" class="cr"/><label for="feO" class="fl">Recommend</label></div>
+              </div>
+              <label class="fls">Backend Preference</label>
+              <div class="cg2" style="grid-template-columns:repeat(4,1fr)">
+                <div><input type="radio" name="be" id="beNo" value="Node.js / Express" class="cr"/><label for="beNo" class="fl">Node / Express</label></div>
+                <div><input type="radio" name="be" id="beDj" value="Python / Django" class="cr"/><label for="beDj" class="fl">Django</label></div>
+                <div><input type="radio" name="be" id="beFa" value="Python / FastAPI" class="cr"/><label for="beFa" class="fl">FastAPI</label></div>
+                <div><input type="radio" name="be" id="beO" value="Recommend me" class="cr"/><label for="beO" class="fl">Recommend</label></div>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Step 3 -->
+            <span class="sstep">Step 3 — Project Details</span>
+            <div class="field"><label for="feat">Describe Your App & Key Features *</label><textarea id="feat" placeholder="e.g. A marketplace where users can list and book local services. Needs auth, listings, search, messaging, and Stripe payments..." required></textarea></div>
+            <label class="fls">Preferred Timeline *</label>
+            <div class="cg2">
+              <div><input type="radio" name="tl" id="tl1" value="ASAP (2–3 weeks)" class="cr" required/><label for="tl1" class="fl">ASAP (2–3 wks)</label></div>
+              <div><input type="radio" name="tl" id="tl2" value="Standard (4–5 weeks)" class="cr"/><label for="tl2" class="fl">Standard (4–5 wks)</label></div>
+              <div><input type="radio" name="tl" id="tl3" value="Flexible (6–8 weeks)" class="cr"/><label for="tl3" class="fl">Flexible (6–8 wks)</label></div>
+              <div><input type="radio" name="tl" id="tl4" value="Not sure yet" class="cr"/><label for="tl4" class="fl">Not sure yet</label></div>
+            </div>
+            <label class="fls">Estimated Budget</label>
+            <div class="bw">
+              <input type="range" class="bs" id="bslider" min="5000" max="50000" step="500" value="10000"/>
+              <div class="bd"><span>$5,000</span><span class="bv" id="bval">$10,000</span><span>$50,000+</span></div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Step 4 -->
+            <span class="sstep">Step 4 — Product Requirements Document</span>
+            <label class="fls">Do you have a PRD?</label>
+            <div style="display:flex;gap:.55rem;margin-bottom:1rem">
+              <div style="flex:1"><input type="radio" name="prd" id="prdY" value="yes" class="cr" onchange="togglePRD()"/><label for="prdY" class="fl">Yes, I have one</label></div>
+              <div style="flex:1"><input type="radio" name="prd" id="prdN" value="no" class="cr" onchange="togglePRD()"/><label for="prdN" class="fl">No — generate one for me</label></div>
+            </div>
+            <div id="prdUp" style="display:none">
+              <div class="fd-zone" id="fdz" onclick="document.getElementById('prdFile').click()" ondragover="event.preventDefault();this.classList.add('dv')" ondragleave="this.classList.remove('dv')" ondrop="handleDrop(event)">
+                <input type="file" id="prdFile" accept=".pdf,.doc,.docx,.txt,.md" onchange="handleFile(this)"/>
+                <div style="font-size:1.5rem;margin-bottom:.4rem">📎</div>
+                <p><strong>Click to upload</strong> or drag & drop your PRD</p>
+                <p style="margin-top:.2rem;font-size:.72rem">PDF, Word, TXT or Markdown</p>
+                <div class="fn" id="fname"></div>
+              </div>
+            </div>
+            <div id="prdGen" style="display:none">
+              <div style="background:var(--gold-lt);border:1px solid #FDE68A;border-radius:10px;padding:.9rem 1.1rem;margin-bottom:1rem">
+                <p style="font-size:.83rem;color:var(--gold);font-weight:700">📝 PRD Generation — $199</p>
+                <p style="font-size:.78rem;color:#78350F;margin-top:.2rem">Describe your idea above. We'll build a complete, structured PRD for your review and approval before any build begins.</p>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Step 5 -->
+            <span class="sstep">Step 5 — Optional Add-Ons</span>
+            <label class="at"><input type="checkbox" id="needNDA"/><div class="at-body"><h4>🔐 NDA Preparation</h4><p>We prepare and execute a mutual NDA before any detailed discussion of your product idea.</p><div class="at-fee">+ $149</div></div></label>
+            <div class="field"><label for="extras">Anything else? (integrations, compliance, platforms, etc.)</label><textarea id="extras" placeholder="e.g. Stripe payments, push notifications, HIPAA compliance, social login..." style="min-height:76px"></textarea></div>
+
+            <button class="submit-btn" id="subBtn" onclick="handleSubmit(event)">
+              <span id="btnTxt">Submit Project Brief →</span>
+            </button>
+            <p class="form-note">🔒 Your brief is kept strictly confidential. Senior review within 24 hours.</p>
+          </div>
+
+          <!-- Success -->
+          <div class="sp-panel" id="spanel">
+            <div class="sicon">✓</div>
+            <h3>Brief received!</h3>
+            <p>A senior team member will review your brief and respond within 24 hours.</p>
+            <div class="ns-list">
+              <div class="ns"><div class="nn">1</div><span>We review your brief and confirm scope</span></div>
+              <div class="ns"><div class="nn">2</div><span id="ns2">We prepare your PRD / review your existing one</span></div>
+              <div class="ns"><div class="nn">3</div><span>You review and sign off before build begins</span></div>
+              <div class="ns"><div class="nn">4</div><span>Your senior team kicks off the build</span></div>
+            </div>
+            <p style="margin-top:1.4rem;font-size:.78rem;color:var(--ink-3)">Check your inbox — a confirmation has been sent to your email.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fl-logo">XaraBuild <span class="dot"></span></div>
+  <p>© 2026 XaraBuild · Senior-Led App Studio · xarabuild.dev</p>
+  <div class="fl-links">
+    <a href="#why">Why Us</a>
+    <a href="#stack">Stack</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#request">Start a Project</a>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), { threshold: .1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Budget slider
+  const sl = document.getElementById('bslider'), bv = document.getElementById('bval');
+  sl.addEventListener('input', () => {
+    const v = parseInt(sl.value);
+    bv.textContent = v >= 50000 ? '$50,000+' : '$' + v.toLocaleString();
+    const p = ((v - 5000) / (50000 - 5000)) * 100;
+    sl.style.background = `linear-gradient(to right,var(--accent) 0%,var(--accent) ${p}%,var(--border) ${p}%)`;
+  });
+
+  // Web stack conditional
+  document.querySelectorAll('input[name="pt"]').forEach(r => {
+    r.addEventListener('change', () => {
+      document.getElementById('wsSection').style.display =
+        ['Full Stack Web', 'Mobile + Web Bundle'].includes(r.value) ? 'block' : 'none';
+    });
+  });
+
+  // PRD toggle
+  function togglePRD() {
+    const yes = document.getElementById('prdY').checked;
+    document.getElementById('prdUp').style.display  = yes ? 'block' : 'none';
+    document.getElementById('prdGen').style.display = yes ? 'none'  : 'block';
+    document.getElementById('ns2').textContent = yes
+      ? 'We review and polish your PRD with you'
+      : 'We generate your PRD from your brief ($199)';
+  }
+
+  // File upload
+  function handleFile(i) { if(i.files[0]) document.getElementById('fname').textContent = '✓ ' + i.files[0].name; }
+  function handleDrop(e) {
+    e.preventDefault(); document.getElementById('fdz').classList.remove('dv');
+    const f = e.dataTransfer.files[0];
+    if(f){ document.getElementById('prdFile').files = e.dataTransfer.files; document.getElementById('fname').textContent = '✓ ' + f.name; }
+  }
+
+  // Submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    const checks = [{ id: 'fn', l: 'First Name' }, { id: 'em', l: 'Email' }, { id: 'feat', l: 'Project Description' }];
+    for(const c of checks){ if(!document.getElementById(c.id).value.trim()){ alert('Please fill in: ' + c.l); document.getElementById(c.id).focus(); return; } }
+    if(!document.querySelector('input[name="pt"]:checked')){ alert('Please select a project type'); return; }
+    if(!document.querySelector('input[name="tl"]:checked')){ alert('Please select a timeline'); return; }
+
+    const data = {
+      firstName:   document.getElementById('fn').value.trim(),
+      lastName:    document.getElementById('ln').value.trim(),
+      email:       document.getElementById('em').value.trim(),
+      company:     document.getElementById('co').value.trim(),
+      whatsapp:    document.getElementById('wa').value.trim(),
+      projectType: document.querySelector('input[name="pt"]:checked').value,
+      frontend:    document.querySelector('input[name="fe"]:checked')?.value || '',
+      backend:     document.querySelector('input[name="be"]:checked')?.value || '',
+      timeline:    document.querySelector('input[name="tl"]:checked').value,
+      budget:      document.getElementById('bval').textContent,
+      hasPRD:      document.querySelector('input[name="prd"]:checked')?.value || 'not specified',
+      needNDA:     document.getElementById('needNDA').checked,
+      features:    document.getElementById('feat').value.trim(),
+      extras:      document.getElementById('extras').value.trim(),
+      submittedAt: new Date().toISOString(),
+    };
+
+    const btn = document.getElementById('subBtn');
+    btn.classList.add('loading');
+    document.getElementById('btnTxt').textContent = 'Submitting…';
+
+    const WEBHOOK_URL = 'https://hook.us2.make.com/obtvxaryj22esq6fozidejib2eazqlc2';
+
+    fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+      .catch(() => {})
+      .finally(() => {
+        setTimeout(() => {
+          document.getElementById('formContent').style.display = 'none';
+          document.getElementById('spanel').style.display = 'flex';
+        }, 700);
+      });
+  }
+</script>
+</body>
+</html>
